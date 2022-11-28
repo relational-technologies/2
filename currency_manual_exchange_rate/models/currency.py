@@ -8,7 +8,7 @@ _logger = logging.getLogger()
 class CurrencyExt(models.Model):
     _inherit ='res.currency'
     
-    #@api.model_cr
+    @api.model_cr
     def _register_hook(self):
           
         def _convert_enhanced(self, from_amount, to_currency, company, date, round=True):

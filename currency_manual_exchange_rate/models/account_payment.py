@@ -4,7 +4,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 class AccountAbstractPayment(models.AbstractModel):
-    _inherit = "account.payment"
+    _inherit = "account.abstract.payment"
 
     def _compute_total_invoices_amount(self):
         """ Compute the sum of the residual of invoices, expressed in the payment currency """
@@ -26,7 +26,7 @@ class AccountPayment(models.Model):
             self = self.with_context(override_currency_rate=self.manual_currency_rate)
         return super(AccountPayment, self)._create_transfer_entry(amount=amount)
 
-    #@api.one
+    @api.one
     @api.depends('invoice_ids', 'amount', 'payment_date', 'currency_id','manual_currency_rate')
     def _compute_payment_difference(self):
         if self.manual_currency_rate_active:

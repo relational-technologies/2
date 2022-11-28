@@ -9,14 +9,14 @@
                     Invoices
                     Payments
                     """,
-    'author': "Smart Way Business Solutions","Oloyede Femi",
+    'author': "Smart Way Business Solutions",
     'website': "https://www.smartway.co",
     'category': 'Accounting',
-    'version': '16.0.1.1',
+    'version': '12.0.1.1',
     "depends" : ['base','account','purchase', 'sale', 'sale_management','stock', 'purchase_stock', 'sale_stock'],
     'data': [
-            #"views/customer_invoice.xml",
-            #"views/account_payment_view.xml",
+            "views/customer_invoice.xml",
+            "views/account_payment_view.xml",
             "views/purchase_view.xml",
             "views/sale_view.xml",
              ],

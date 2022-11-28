@@ -10,7 +10,7 @@ class SaleOrder(models.Model):
     manual_currency_rate_active = fields.Boolean('Apply Manual Exchange')
     manual_currency_rate = fields.Float('Rate', digits=(12, 4))
 
-    #@api.multi
+    @api.multi
     def action_invoice_create(self, grouped=False, final=False):
         invoice_ids = super(SaleOrder, self).action_invoice_create(grouped=grouped, final=final)
         for order in self:
@@ -18,7 +18,7 @@ class SaleOrder(models.Model):
                 order.invoice_ids.write({'manual_currency_rate_active':order.manual_currency_rate_active,'manual_currency_rate':order.manual_currency_rate})
         return invoice_ids
     
-    #@api.multi
+    @api.multi
     def action_confirm(self):
         if self.manual_currency_rate_active:
             self = self.with_context(override_currency_rate=self.manual_currency_rate)
@@ -35,7 +35,7 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     
-    #@api.multi
+    @api.multi
     @api.onchange('product_id')
     def product_id_change(self):
         if self.order_id.manual_currency_rate_active:
@@ -52,7 +52,7 @@ class SaleOrderLine(models.Model):
 class SaleAdvancePaymentInv(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
-    #@api.multi
+    @api.multi
     def _create_invoice(self, order, so_line, amount):
         res = super(SaleAdvancePaymentInv, self)._create_invoice(order, so_line, amount)
         if order.manual_currency_rate_active:
